@@ -5,5 +5,10 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <main className="flex min-h-screen flex-col bg-gray-100">
+      {children}
+      <footer className="text-center text-gray-500">©2024 Nanyi</footer>
+    </main>
+  );
 }

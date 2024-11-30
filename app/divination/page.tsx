@@ -36,11 +36,16 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex-1">
       <div className="mx-auto max-w-3xl bg-white shadow-lg">
         <header className="sticky top-0 z-10 border-b border-gray-200 bg-white py-6 text-center">
           <h1 className="top-0 text-3xl font-bold text-gray-800">卜算</h1>
-          <p className="mt-2 text-gray-600">起局：利用某种方式占卜，以下提供三种方式</p>
+          <div className="mt-2 px-4 text-left text-gray-600">
+            <p>前言：占卜只在两种情况下起局才会灵验。</p>
+            <p>1. 动象发生之后，例如：飞鸟坠地、杯子打碎、天上打雷、手指割破、灵光一闪···</p>
+            <p>2. 有问才能有答，一问一答形成一阴一阳。</p>
+            <p>起局：依据某种方式开启占卜，以下为三种起局方式。</p>
+          </div>
           <div className="mt-4 flex justify-center space-x-4">
             <button
               onClick={() => handleTabChange('current')}

@@ -1,4 +1,5 @@
 import calendar from 'js-calendar-converter';
+import dayjs from 'dayjs';
 interface IGuaXiang {
   /** 六神名字 */
   name: string;
@@ -114,7 +115,7 @@ export interface DivinationResult {
 // 时间起局
 export const timeStart = (date: Date): DivinationResult => {
   const hours = date.getHours();
-  const lunar = calendar.solar2lunar(date);
+  const lunar = calendar.solar2lunar(date.getFullYear(), date.getMonth() + 1, date.getDate());
   const shichen = timeToShichen(hours);
   const tag = divination(lunar.lMonth, lunar.lDay, shichen.num);
   const result = guaXiang[tag];

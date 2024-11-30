@@ -25,7 +25,7 @@ declare module 'js-calendar-converter' {
 //   Term: null,
 //   astro: '射手座'
 // }
-    solar2lunar(date: Date | string | number): {
+    solar2lunar(yPara: string | number, mPara: string | number, dPara: string | number): {
       lYear: number;
       lMonth: number;
       lDay: number;
