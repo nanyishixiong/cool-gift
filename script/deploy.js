@@ -16,7 +16,7 @@ http
   .createServer(async (req, res) => {
     console.log('receive request');
     console.log(req.url);
-    if (req.method === 'POST' && req.url === '/api/rebuild') {
+    if (req.method === 'POST' && req.url === '/api/deploy') {
       const data = await resolvePost(req);
 
       console.log('拉取仓库最新代码');
