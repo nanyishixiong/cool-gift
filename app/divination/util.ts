@@ -1,5 +1,5 @@
 import calendar from 'js-calendar-converter';
-import dayjs from 'dayjs';
+
 interface IGuaXiang {
   /** 六神名字 */
   name: string;

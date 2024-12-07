@@ -1,243 +1,83 @@
 'use client';
-import { useState } from 'react';
-import { currentTimeStart, timeStart, numberStart } from './util';
-import type { DivinationResult } from './util';
-import dayjs from 'dayjs';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import StarryBackground from '../components/StarryBackground';
+import { redirect } from 'next/navigation';
+const GlitchText = ({ children }: { children: React.ReactNode }) => (
+  <motion.span
+    className="inline-block"
+    animate={{
+      x: [0, -2, 2, -2, 0],
+      y: [0, 2, -2, 2, 0],
+    }}
+    transition={{
+      duration: 0.5,
+      repeat: Infinity,
+      repeatType: 'reverse',
+    }}
+  >
+    {children}
+  </motion.span>
+);
 
 export default function Page() {
-  const [result, setResult] = useState<DivinationResult | null>(null);
-
-  const [tab, setTab] = useState<'current' | 'time' | 'number'>('current');
-  const [customDate, setCustomDate] = useState<Date>(new Date());
-  const [numbers, setNumbers] = useState<[number, number, number]>([1, 1, 1]);
-
-  const handleCurrentStart = () => {
-    const result = currentTimeStart();
-    setResult(result);
-  };
-
-  const handleTimeStart = () => {
-    const result = timeStart(customDate);
-    setResult(result);
-  };
-
-  const handleNumberStart = () => {
-    const result = numberStart(...numbers);
-    setResult({
-      solar: '',
-      lunar: '',
-      result: result.result,
-    });
-  };
-
-  const handleTabChange = (tab: 'current' | 'time' | 'number') => {
-    setTab(tab);
-    setResult(null);
-  };
-
   return (
-    <div className="flex-1">
-      <div className="mx-auto max-w-3xl bg-white shadow-lg">
-        <header className="sticky top-0 z-10 border-b border-gray-200 bg-white py-6 text-center">
-          <h1 className="top-0 text-3xl font-bold text-gray-800">卜算</h1>
-          <div className="mt-2 px-4 text-left text-gray-600">
-            <p>前言：占卜只在两种情况下起局才会灵验。</p>
-            <p>1. 动象发生之后，例如：飞鸟坠地、杯子打碎、天上打雷、手指割破、灵光一闪···</p>
-            <p>2. 有问才能有答，一问一答形成一阴一阳。</p>
-            <p>起局：依据某种方式开启占卜，以下为三种起局方式。</p>
-          </div>
-          <div className="mt-4 flex justify-center space-x-4">
-            <button
-              onClick={() => handleTabChange('current')}
-              className={`rounded-lg px-4 py-2 ${
-                tab === 'current' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              当前时间
-            </button>
-            <button
-              onClick={() => handleTabChange('time')}
-              className={`rounded-lg px-4 py-2 ${
-                tab === 'time' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              指定时间
-            </button>
-            <button
-              onClick={() => handleTabChange('number')}
-              className={`rounded-lg px-4 py-2 ${
-                tab === 'number' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              指定数字
-            </button>
-          </div>
-        </header>
-        <div className="p-8">
-          {(tab === 'current' || tab === 'time') && (
-            <>
-              {tab === 'time' && (
-                <div className="mb-4">
-                  <input
-                    type="datetime-local"
-                    value={dayjs(customDate).format('YYYY-MM-DDTHH:mm')}
-                    onChange={(e) => {
-                      console.log(e.target.value, new Date(e.target.value));
-                      setCustomDate(new Date(e.target.value));
-                    }}
-                    className="w-full rounded-lg border border-gray-300 p-2"
-                  />
-                </div>
-              )}
-              <button
-                onClick={tab === 'current' ? handleCurrentStart : handleTimeStart}
-                className="w-full rounded-lg bg-indigo-600 py-3 text-white transition-colors hover:bg-indigo-700"
-              >
-                开始卜算
-              </button>
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black font-['Orbitron',sans-serif] text-white">
+      <StarryBackground />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-purple-900/30" />
 
-              {result && (
-                <div className="mt-8 space-y-6">
-                  <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
-                    <span className="text-gray-600">阳历</span>
-                    <span className="text-lg font-medium">{result.solar}</span>
-                  </div>
+      <header className="z-10 mb-4 px-4 text-center md:mb-8">
+        <h1 className="mb-2 text-4xl font-bold md:text-6xl">
+          <GlitchText>赛博算命</GlitchText>
+        </h1>
+        <p className="text-base text-cyan-300 md:text-xl">
+          欢迎来到赛博算命世界！在这里我们将利用最先进的技术来预测您的未来。
+        </p>
+      </header>
 
-                  <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
-                    <span className="text-gray-600">农历</span>
-                    <span className="text-lg font-medium">{result.lunar}</span>
-                  </div>
+      <main className="z-10 flex flex-col items-center justify-center">
+        <motion.button
+          className="mt-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 px-8 py-4 text-lg font-bold text-white shadow-[0_0_20px_rgba(0,255,255,0.7)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.9)] md:mt-8 md:px-12 md:py-6 md:text-2xl"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => redirect('/divination/main')}
+        >
+          开始算命
+        </motion.button>
+      </main>
 
-                  {result.result && (
-                    <div className="rounded-lg border border-gray-200 p-6">
-                      <h3 className="mb-4 text-xl font-bold">卦象详解</h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <p>
-                            <span className="text-gray-600">卦名：</span>
-                            {result.result.name}
-                          </p>
-                          <p>
-                            <span className="text-gray-600">状态：</span>
-                            {result.result.status}
-                          </p>
-                          <p>
-                            <span className="text-gray-600">五行：</span>
-                            {result.result.wuxing}
-                          </p>
-                          <p>
-                            <span className="text-gray-600">方位：</span>
-                            {result.result.direction}
-                          </p>
-                        </div>
-                        <div className="space-y-2">
-                          <p>
-                            <span className="text-gray-600">神兽：</span>
-                            {result.result.shenshou}
-                          </p>
-                          <p>
-                            <span className="text-gray-600">颜色：</span>
-                            {result.result.color}
-                          </p>
-                          <p>
-                            <span className="text-gray-600">数字：</span>
-                            {result.result.number.join(', ')}
-                          </p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="mb-1 text-gray-600">含义：</p>
-                          <p className="text-gray-800">{result.result.mean}</p>
-                        </div>
-                        <div className="col-span-2">
-                          <p className="mb-1 text-gray-600">口诀：</p>
-                          <p className="whitespace-pre-line text-gray-800">{result.result.koujue}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </>
-          )}
-
-          {tab === 'number' && (
-            <>
-              <div className="mb-4 flex space-x-4">
-                {numbers.map((num, index) => (
-                  <input
-                    key={index}
-                    type="number"
-                    value={num}
-                    onChange={(e) => {
-                      const newNumbers = [...numbers];
-                      newNumbers[index] = parseInt(e.target.value);
-                      setNumbers(newNumbers as [number, number, number]);
-                    }}
-                    className="w-full rounded-lg border border-gray-300 p-2"
-                    min="1"
-                    max="10"
-                  />
-                ))}
-              </div>
-              <button
-                onClick={handleNumberStart}
-                className="w-full rounded-lg bg-indigo-600 py-3 text-white transition-colors hover:bg-indigo-700"
-              >
-                开始卜算
-              </button>
-
-              {result && result.result && (
-                <div className="mt-8 rounded-lg border border-gray-200 p-6">
-                  <h3 className="mb-4 text-xl font-bold">卦象详解</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <p>
-                        <span className="text-gray-600">卦名：</span>
-                        {result.result.name}
-                      </p>
-                      <p>
-                        <span className="text-gray-600">状态：</span>
-                        {result.result.status}
-                      </p>
-                      <p>
-                        <span className="text-gray-600">五行：</span>
-                        {result.result.wuxing}
-                      </p>
-                      <p>
-                        <span className="text-gray-600">方位：</span>
-                        {result.result.direction}
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <p>
-                        <span className="text-gray-600">神兽：</span>
-                        {result.result.shenshou}
-                      </p>
-                      <p>
-                        <span className="text-gray-600">颜色：</span>
-                        {result.result.color}
-                      </p>
-                      <p>
-                        <span className="text-gray-600">数字：</span>
-                        {result.result.number.join(', ')}
-                      </p>
-                    </div>
-                    <div className="col-span-2">
-                      <p className="mb-1 text-gray-600">含义：</p>
-                      <p className="text-gray-800">{result.result.mean}</p>
-                    </div>
-                    <div className="col-span-2">
-                      <p className="mb-1 text-gray-600">口诀：</p>
-                      <p className="whitespace-pre-line text-gray-800">{result.result.koujue}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-        <footer className="text-center text-gray-500">©2024 Nanyi</footer>
+      <div className="pointer-events-none absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-blue-500 opacity-30"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 1}px`,
+              height: `${Math.random() * 4 + 1}px`,
+              animation: `float ${Math.random() * 10 + 5}s linear infinite`,
+            }}
+          />
+        ))}
       </div>
+
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        @keyframes float {
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 }
