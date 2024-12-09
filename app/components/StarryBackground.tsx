@@ -22,7 +22,7 @@ function Stars(props: any) {
 
 export default function StarryBackground() {
   return (
-    <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-0">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <Stars />
       </Canvas>
