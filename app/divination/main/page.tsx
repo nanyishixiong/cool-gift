@@ -39,29 +39,23 @@ export default function Page() {
     <div className="flex-1">
       <div className="mx-auto max-w-3xl bg-white shadow-lg">
         <header className="sticky top-0 z-10 border-b border-gray-200 bg-white py-6 text-center">
-          <h1 className="top-0 text-3xl font-bold text-gray-800">卜算</h1>
-          <div className="mt-2 px-4 text-left text-gray-600">
-            <p>前言：占卜只在两种情况下起局才会灵验。</p>
-            <p>1. 动象发生之后，例如：飞鸟坠地、杯子打碎、天上打雷、手指割破、灵光一闪···</p>
-            <p>2. 有问才能有答，一问一答形成一阴一阳。</p>
-            <p>起局：依据某种方式开启占卜，以下为三种起局方式。</p>
-          </div>
+          <h1 className="top-0 text-3xl font-bold text-gray-800">赛博占卜</h1>
           <div className="mt-4 flex justify-center space-x-4">
-            <button
-              onClick={() => handleTabChange('current')}
-              className={`rounded-lg px-4 py-2 ${
-                tab === 'current' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              当前时间
-            </button>
             <button
               onClick={() => handleTabChange('time')}
               className={`rounded-lg px-4 py-2 ${
                 tab === 'time' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
               }`}
             >
-              指定时间
+              生辰八字
+            </button>
+            <button
+              onClick={() => handleTabChange('current')}
+              className={`rounded-lg px-4 py-2 ${
+                tab === 'current' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              此时此刻
             </button>
             <button
               onClick={() => handleTabChange('number')}
@@ -69,8 +63,13 @@ export default function Page() {
                 tab === 'number' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'
               }`}
             >
-              指定数字
+              三数卜算
             </button>
+          </div>
+          <div className="my-5 text-center text-gray-600">
+            {tab === 'time' && <p>生辰八字，命中注定</p>}
+            {tab === 'current' && <p>此时此刻，自有天意</p>}
+            {tab === 'number' && <p>心之所想，三数卜万物</p>}
           </div>
         </header>
         <div className="p-8">
@@ -236,7 +235,6 @@ export default function Page() {
             </>
           )}
         </div>
-        <footer className="text-center text-gray-500">©2024 Nanyi</footer>
       </div>
     </div>
   );

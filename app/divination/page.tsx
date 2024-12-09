@@ -4,22 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import StarryBackground from '../components/StarryBackground';
 import { redirect } from 'next/navigation';
-const GlitchText = ({ children }: { children: React.ReactNode }) => (
-  <motion.span
-    className="inline-block"
-    animate={{
-      x: [0, -2, 2, -2, 0],
-      y: [0, 2, -2, 2, 0],
-    }}
-    transition={{
-      duration: 0.5,
-      repeat: Infinity,
-      repeatType: 'reverse',
-    }}
-  >
-    {children}
-  </motion.span>
-);
+import { GlitchText } from '../components/Shake';
 
 export default function Page() {
   return (
@@ -29,21 +14,19 @@ export default function Page() {
 
       <header className="z-10 mb-4 px-4 text-center md:mb-8">
         <h1 className="mb-2 text-4xl font-bold md:text-6xl">
-          <GlitchText>赛博算命</GlitchText>
+          <GlitchText>赛博占卜</GlitchText>
         </h1>
-        <p className="text-base text-cyan-300 md:text-xl">
-          欢迎来到赛博算命世界！在这里我们将利用最先进的技术来预测您的未来。
-        </p>
+        <p className="mt-5 text-base text-cyan-300 md:text-xl">你想要的答案，也许就在这里......</p>
       </header>
 
       <main className="z-10 flex flex-col items-center justify-center">
         <motion.button
-          className="mt-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 px-8 py-4 text-lg font-bold text-white shadow-[0_0_20px_rgba(0,255,255,0.7)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.9)] md:mt-8 md:px-12 md:py-6 md:text-2xl"
+          className="mt-6 rounded-full bg-gradient-to-l from-cyan-500 px-8 py-4 text-lg font-bold text-white shadow-[0_0_20px_rgba(0,255,255,0.7)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.9)] md:mt-8 md:px-12 md:py-6 md:text-2xl"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => redirect('/divination/main')}
         >
-          开始算命
+          开启占卜→
         </motion.button>
       </main>
 
